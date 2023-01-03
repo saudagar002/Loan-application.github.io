@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Application</title>
+
+
+    <style>
+        body {
+            background-color: rgb(226, 223, 223);
+            padding: 2%;
+        }
+
+        #main {
+            width: 300px;
+            height: 615px;
+            background-color: rgb(186, 186, 238);
+            padding: 15px;
+            margin: auto;
+            box-shadow: 0 0 15px grey;
+            border-radius: 10px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .input {
+            width: 290px;
+            line-height: 25px;
+            font-size: 15px;
+            border-radius: 5px;
+            border: 1px solid rgb(80, 80, 221);
+            padding-left: 5px;
+        }
+
+        label {
+            font-size: 17px;
+        }
+
+        .star {
+            color: red;
+            font-size: 15px;
+        }
+
+        #num-words{
+            color: red;
+            margin:0;
+        }
+
+
+        #heading {
+            font-weight: 600;
+        }
+
+        #estimate {
+            border: none;
+        }
+
+        #emi-btn {
+            background-color: rgb(79, 79, 206);
+            width: 100px;
+            height: 25px;
+            color: white;
+            font-size: small;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .btn2 {
+            background-color: rgb(79, 79, 206);
+            width: 80px;
+            height: 30px;
+            color: white;
+            font-size: medium;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #emi-btn:hover {
+            background-color: rgb(54, 54, 180);
+            cursor: pointer;
+        }
+
+        .btn2:hover {
+            background-color: rgb(54, 54, 180);
+            cursor: pointer;
+        }
+
+        ::placeholder {
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="main">
+        <h2>Bank Loan Application Form</h2>
+        <p id="heading"><span class="star">*</span>Kindly enter the correct information in the Loan Application Form</p>
+        <br>
+        <form action="confirm.html" netlify>
+            <label>Full Name :</label><br>
+            <input type="text" class="input" id="name" pattern="[a-zA-Z]{2,}[ ][a-zA-Z ]{2,}"
+                title="Format should be like: 'abc xyz'" placeholder="" required>
+            <br><br>
+
+            <label>Email :</label><br>
+            <input type="text" class="input" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                title="Format should be like: 'abcd@xyz.com'" placeholder="" required>
+            <br><br>
+
+            <label>PAN :</label><br>
+            <input type="text" class="input" id="pan" maxlength="10"
+                pattern="[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][0-9][0-9][0-9][0-9][a-zA-Z]"
+                title="Format should be like: 'ABCDE1234F'" placeholder="" required>
+            <br><br>
+
+            <label>Enter Loan Amount(Rs.) :</label><br>
+            <input type="text" class="input" id="amount" maxlength="9" onchange="num_to_words()" pattern="^[0-9]*$" required><br>
+            <p id="num-words"></p>
+            <br>
+
+            <label>Loan Tenure(Year) :</label>
+            <input type="text" class="input" id="year" maxlength="2" pattern="^[0-9]*$"
+                title="Format should be like: '1-99'" placeholder="" required>
+            <br><br>
+
+            <input type="button" id="emi-btn" onclick="total_emi()" value="Calculate EMI">
+            <p id="estimate">Estimated EMI : <span id="result"></span></p>
+
+
+            <input type="submit" class="btn2" onclick="submit_data()">
+            <input type="reset" class="btn2" onclick="clr()">
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+    <!-- Javascript code for index.html starts-->
+
+    <script src="script.js"></script>
+    <script>
+        //index.html starts
+        // Below code is To calculate EMI  
+
+        var amt;
+        var year;
+        var rate = 0.085;
+        var month;
+        var emi;
+        var otp;
+        var name;
+        var email;
+
+        function total_emi() {
+            amt = parseInt(document.getElementById('amount').value);
+            year = parseInt(document.getElementById('year').value);
+            month = parseInt(year * 12);
+
+            emi = parseInt(((amt) + (amt * rate * year)) / month);
+
+            document.getElementById('result').innerHTML = "Rs." + " " + emi + " " + "/month";
+        }
+
+        function clr() {
+            document.getElementById('result').innerHTML = " ";
+            document.getElementById('num-words').innerHTML = " ";
+
+        }
+
+        function submit_data() {
+            name = document.getElementById('name').value;
+            email = document.getElementById('email').value;
+            otp = Math.ceil(1000 + Math.random() * 10000);
+
+            //Below value stored in browser session so we can pass it to another page
+            sessionStorage.setItem("firstName", name);
+            sessionStorage.setItem("Email", email);
+            sessionStorage.setItem("Otp", otp);
+
+        }
+
+        //index.html ends
+
+    </script>
+
+    <!-- Javascript code for index.html starts-->
+
+
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation!</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(226, 223, 223);
+            padding: 2%;
+        }
+
+        #main {
+            width: 350px;
+            height: 580px;
+            background-color: rgb(186, 186, 238);
+            padding: 15px;
+            margin: auto;
+            box-shadow: 0 0 15px grey;
+            border-radius: 10px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        p {
+            line-height: 25px;
+            ;
+        }
+
+        .input {
+            width: 290px;
+            line-height: 25px;
+            font-size: 15px;
+            border-radius: 5px;
+            border: 1px solid rgb(80, 80, 221);
+            padding-left: 5px;
+        }
+
+        #name {
+            color: rgb(57, 57, 196);
+
+        }
+
+        #email {
+            color: rgb(57, 57, 196);
+        }
+
+        label {
+            font-size: 17px;
+        }
+
+        .btn2 {
+            background-color: rgb(79, 79, 206);
+            width: 80px;
+            height: 30px;
+            color: white;
+            font-size: medium;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .btn2:hover {
+            background-color: rgb(54, 54, 180);
+            cursor: pointer;
+        }
+
+        #success-div {
+            width: 100%;
+            height: 90px;
+            display: flex;
+            position: absolute;
+            display: none;
+        }
+
+        #sub1 img {
+            width: 50px;
+        }
+
+        #sub1 {
+            width: 60px;
+            height: 90px;
+        }
+
+        #sub2 {
+            width: 250px;
+            height: 90px;
+            padding-top: 14px;
+            font-size: x-large;
+            color: rgb(0, 186, 0);
+        }
+
+        #fail-div {
+            width: 100%;
+            height: 90px;
+            display: flex;
+            position: absolute;
+            display: none;
+        }
+
+        #sub11 img {
+            width: 50px;
+        }
+
+        #sub11 {
+            width: 60px;
+            height: 90px;
+        }
+
+        #sub22 {
+            width: 250px;
+            height: 90px;
+            padding-top: 14px;
+            font-size: x-large;
+            color: rgb(244, 67, 54);
+        }
+
+        #warning {
+            color: rgb(244, 67, 54);
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="main">
+        <h2>Bank Loan Application Form</h2>
+        <p>Dear <span id="name"> </span>,<br>
+            Thank you for your inquiry.<br>
+            A four digit verification number has been sent to your Email : <span id="email"></span>,<br>
+            Please enter it in the following box and submit for confirmation:</p>
+        <br>
+
+        <label>Enter the OTP :</label><br><br>
+        <input class="input" id="otp" type="text"><br><br>
+        <button class="btn2" id="validate" onclick="validate()">Validate</button>
+        <button class="btn2" id="back" onclick="history.back()">Back</button>
+        <br><br><br>
+
+        <div id="warning"></div>
+
+        <div id="success-div">
+            <div id="sub1"><img src="check.png"></div>
+            <div id="sub2">Validation Successful !</div>
+        </div>
+
+        <div id="fail-div">
+            <div id="sub11"><img src="remove.png"></div>
+            <div id="sub22">Validation Failed !</div>
+        </div>
+
+
+
+
+        <!-- Javascript code for confirm.html starts-->
+
+
+        <script>
+
+            //confirm.html starts
+            // below code is to get value from index.html page and pass it to confirm.htmll page
+            
+            var name = sessionStorage.getItem("firstName");
+            var otp = parseInt(sessionStorage.getItem("Otp"));
+            var email = sessionStorage.getItem("Email");
+            var name2 = name.split(" ");
+            var input_otp;
+            var count = 0;
+            
+            alert("Your OTP is :" + " " + otp);
+
+            document.getElementById('name').innerHTML = name2[0];
+            document.getElementById('email').innerHTML = " " + email + " ";
+
+
+            function validate() {
+                input_otp = parseInt(document.getElementById('otp').value);
+
+                if (input_otp == otp) {
+                    document.getElementById('warning').style.display = "none";
+                    document.getElementById('success-div').style.display = "flex";
+                    document.getElementById('fail-div').style.display = "none";
+                    document.getElementById('validate').style.display = "none";
+                }
+
+                else if (input_otp != otp && count < 2) {
+                    count++;
+                    var num = 3 - count;
+                    document.getElementById('warning').innerHTML = "Enter correct OTP," + " " + num + " " + "attempts left."
+                    document.getElementById('otp').value = " ";
+                }
+
+                else if (input_otp != otp && count == 2) {
+                    document.getElementById('warning').style.display = "none";
+                    document.getElementById('fail-div').style.display = "flex";
+                    document.getElementById('success-div').style.display = "none";
+                    document.getElementById('validate').style.display = "none";
+                }
+            }
+
+            console.log(name2[0]);
+            console.log(email);
+            console.log(otp);
+
+        //confirm.html ends
+
+
+
+        </script>
+        <script src="script.js"></script>
+
+        <!-- Javascript code for confirm.html ends-->
+
+
+
+</body>
+
+</html>
